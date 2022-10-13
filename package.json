@@ -1,0 +1,27 @@
+{
+  "name": "regent-tech-demo",
+  "description": "Competence evening tech demo",
+  "version": "1.0.0",
+  "homepage": "https://github.com/dragancla/regent-tech-demo",
+  "author": "Anton Dragan <contact@antondragan.com> (https://antondragan.com/)",
+  "license": "ISC",
+  "private": true,
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.21.6"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.0.0", 
+    "sequelize-test-helpers": "^1.4.3"
+  }
+}
