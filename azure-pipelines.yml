@@ -10,7 +10,7 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '1bb62e21-107a-4a36-8e22-694236539c49'
+  dockerRegistryServiceConnection: '4073c00b-6623-4041-b73e-66989a883a73'
   imageRepository: 'regentacr'
   containerRegistry: 'regentacr.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
@@ -41,10 +41,10 @@ stages:
     - task: Docker@2
       displayName: 'Run tests inside container'
       inputs:
-        repository: 'regenttechdemo_app'
+        repository: 'regent_app'
         containerRegistry: $(imageRepository)
         command: 'run'
-        arguments: '$(containerRegistry)/regenttechdemo_app:$(latestTag) npm run test'
+        arguments: '$(containerRegistry)/regent_app:$(latestTag) npm run test'
     - task: DockerCompose@0
       displayName: Push image to Azure Container Registry
       inputs:
