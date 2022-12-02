@@ -4,7 +4,7 @@ WORKDIR /regent-tech-demo
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm install
 
 COPY . ./
 
