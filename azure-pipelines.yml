@@ -32,7 +32,7 @@ stages:
       displayName: Build image from Docker Container
       inputs:
         containerregistrytype: 'Azure Container Registry'
-        azureSubscription: 'Pay-As-You-Go(4bc450e5-746e-44c3-946c-e3a141a0b6a1)'
+        azureSubscription: 'Azure Subscription Service Connection'
         azureContainerRegistry: '{"loginServer":"regentacr.azurecr.io", "id" : "/subscriptions/4bc450e5-746e-44c3-946c-e3a141a0b6a1/resourceGroups/Regent-Demo/providers/Microsoft.ContainerRegistry/registries/regentacr"}'
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Build services'
@@ -49,7 +49,15 @@ stages:
       displayName: Push image to Azure Container Registry
       inputs:
         containerregistrytype: 'Azure Container Registry'
-        azureSubscription: 'Pay-As-You-Go(4bc450e5-746e-44c3-946c-e3a141a0b6a1)'
+        azureSubscription: 'Azure Subscription Service Connection'
         azureContainerRegistry: '{"loginServer":"regentacr.azurecr.io", "id" : "/subscriptions/4bc450e5-746e-44c3-946c-e3a141a0b6a1/resourceGroups/Regent-Demo/providers/Microsoft.ContainerRegistry/registries/regentacr"}'
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Push services'
+    
+    - task: DockerCompose@0
+      inputs:
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Azure Subscription Service Connection'
+        azureContainerRegistry: '{"loginServer":"regentacr.azurecr.io", "id" : "/subscriptions/4bc450e5-746e-44c3-946c-e3a141a0b6a1/resourceGroups/Regent-Demo/providers/Microsoft.ContainerRegistry/registries/regentacr"}'
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Run a Docker Compose command'
