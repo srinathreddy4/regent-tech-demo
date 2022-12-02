@@ -10,7 +10,7 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'f203dc57-a176-4e66-b906-c7e6ea45edd0'
+  dockerRegistryServiceConnection: '1bb62e21-107a-4a36-8e22-694236539c49'
   imageRepository: 'regentacr'
   containerRegistry: 'regentacr.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
