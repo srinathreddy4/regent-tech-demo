@@ -42,9 +42,9 @@ stages:
       displayName: 'Run tests inside container'
       inputs:
         containerRegistry: 'ACR Service connection'
-        repository: 'regent_app'
+        repository: 'regenttechdemo_app'
         command: 'run'
-        arguments: '$(containerRegistry)/regent_app:$(latestTag) npm run test'
+        arguments: '$(containerRegistry)/regenttechdemo_app:$(latestTag) npm run test'
         addPipelineData: false
         addBaseImageData: false
     - task: DockerCompose@0
