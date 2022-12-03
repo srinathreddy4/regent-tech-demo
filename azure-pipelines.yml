@@ -40,6 +40,7 @@ stages:
         includeLatestTag: true
     - task: Docker@2
       displayName: 'Run tests inside container'
+      enabled: false
       inputs:
         containerRegistry: 'ACR Service connection'
         repository: 'regenttechdemo_app'
