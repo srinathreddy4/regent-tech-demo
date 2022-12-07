@@ -41,7 +41,7 @@ stages:
       displayName: Build and Push image to ACR
       inputs:
         containerRegistry: 'ACR Service connection'
-        repository: 'regenttechdemo'
+        repository: '$(DOCKER_IMAGE_NAME)'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: '$(DOCKER_IMAGE_TAG)'
