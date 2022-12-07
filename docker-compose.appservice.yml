@@ -12,7 +12,7 @@ services:
     depends_on:
         mysql:
              condition: service_completed_successfully
-    image: ${DOCKER_REGISTRY_SERVER}/${DOCKER_IMAGE_NAME}_app:${DOCKER_IMAGE_TAG}
+    image: #{DOCKER_REGISTRY_SERVER}#/#{DOCKER_IMAGE_NAME}#_app:#{DOCKER_IMAGE_TAG}#
     restart: always
     ports:
       - 8080:8080
