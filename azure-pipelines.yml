@@ -30,6 +30,7 @@ stages:
     steps:
     - task: DockerCompose@0
       displayName: 'Build image from Docker Container'
+      enabled: false
       inputs:
         containerregistrytype: 'Azure Container Registry'
         azureSubscription: 'Azure Subscription Service Connection'
@@ -50,9 +51,17 @@ stages:
         addBaseImageData: false
     - task: DockerCompose@0
       displayName: Push image to Azure Container Registry
+      enabled: false
       inputs:
         containerregistrytype: 'Azure Container Registry'
         azureSubscription: 'Azure Subscription Service Connection'
         azureContainerRegistry: '{"loginServer":"regentacr.azurecr.io", "id" : "/subscriptions/4bc450e5-746e-44c3-946c-e3a141a0b6a1/resourceGroups/Regent-Demo/providers/Microsoft.ContainerRegistry/registries/regentacr"}'
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Push services'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'ACR Service connection'
+        repository: 'regentacr'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+    
