@@ -9,15 +9,13 @@ resources:
 - repo: self
 
 variables:
+  - group: regent-tech-demo
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '4073c00b-6623-4041-b73e-66989a883a73'
-  imageRepository: 'regentacr'
-  containerRegistry: 'regentacr.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: '$(Build.BuildId)'
-  latestTag: 'latest'
+  - name: dockerRegistryServiceConnection
+    value: '4073c00b-6623-4041-b73e-66989a883a73'
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+  - name: vmImageName
+    value: 'ubuntu-latest'
 
 stages:
 - stage: Build
@@ -46,7 +44,8 @@ stages:
         repository: 'regentacr'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        tags: '$(Build.BuildId)'
+        tags: '$(DOCKER_IMAGE_TAG)'
+
     - task: replacetokens@5
       displayName: Replace Tokens
       inputs:
