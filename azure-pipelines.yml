@@ -31,7 +31,7 @@ stages:
       enabled: false
       inputs:
         containerRegistry: 'ACR Service connection'
-        repository: 'regentacr'
+        repository: 'regenttechdemo'
         command: 'run'
         arguments: '$(containerRegistry)/regenttechdemo_app:$(latestTag) npm install-test'
         addPipelineData: false
@@ -41,7 +41,7 @@ stages:
       displayName: Build and Push image to ACR
       inputs:
         containerRegistry: 'ACR Service connection'
-        repository: 'regentacr'
+        repository: 'regenttechdemo'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: '$(DOCKER_IMAGE_TAG)'
