@@ -28,36 +28,17 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: DockerCompose@0
-      displayName: 'Build image from Docker Container'
-      enabled: false
-      inputs:
-        containerregistrytype: 'Azure Container Registry'
-        azureSubscription: 'Azure Subscription Service Connection'
-        azureContainerRegistry: '{"loginServer":"regentacr.azurecr.io", "id" : "/subscriptions/4bc450e5-746e-44c3-946c-e3a141a0b6a1/resourceGroups/Regent-Demo/providers/Microsoft.ContainerRegistry/registries/regentacr"}'
-        dockerComposeFile: '**/docker-compose.yml'
-        action: 'Build services'
-        includeSourceTags: true
-        includeLatestTag: true
     - task: Docker@2
       displayName: 'Run tests inside container'
       enabled: false
       inputs:
         containerRegistry: 'ACR Service connection'
-        repository: 'regenttechdemo_app'
+        repository: 'regentacr'
         command: 'run'
         arguments: '$(containerRegistry)/regenttechdemo_app:$(latestTag) npm install-test'
         addPipelineData: false
         addBaseImageData: false
-    - task: DockerCompose@0
-      displayName: Push image to Azure Container Registry
-      enabled: false
-      inputs:
-        containerregistrytype: 'Azure Container Registry'
-        azureSubscription: 'Azure Subscription Service Connection'
-        azureContainerRegistry: '{"loginServer":"regentacr.azurecr.io", "id" : "/subscriptions/4bc450e5-746e-44c3-946c-e3a141a0b6a1/resourceGroups/Regent-Demo/providers/Microsoft.ContainerRegistry/registries/regentacr"}'
-        dockerComposeFile: '**/docker-compose.yml'
-        action: 'Push services'
+
     - task: Docker@2
       displayName: Build and Push image to ACR
       inputs:
@@ -65,6 +46,7 @@ stages:
         repository: 'regentacr'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
+
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
       inputs:
@@ -72,6 +54,7 @@ stages:
         Contents: 'docker-compose.yml'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
         CleanTargetFolder: true
+
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifacts'
       inputs:
