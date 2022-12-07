@@ -59,9 +59,23 @@ stages:
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Push services'
     - task: Docker@2
+      displayName: Build and Push image to ACR
       inputs:
         containerRegistry: 'ACR Service connection'
         repository: 'regentacr'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)'
+        Contents: 'docker-compose.yml'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+        CleanTargetFolder: true
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifacts'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
     
