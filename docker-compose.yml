@@ -1,34 +1,28 @@
-version: '3.8'
+version: '3.3'
 services:
   mysql:
     image: mysql:8
-    restart: unless-stopped
-    env_file: ./.env
+    restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - MYSQL_DATABASE=$MYSQLDB_DATABASE
-    ports:
-      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT 
+      - MYSQL_ROOT_PASSWORD=12345678
+      - MYSQL_DATABASE=consultantsdb
     volumes:
       - db:/var/lib/mysql
   app:
     depends_on:
-      - mysql
-    build: ./
-    restart: unless-stopped
-    env_file: ./.env
+        mysql:
+             condition: service_completed_successfully
+    image: regentacr.azurecr.io/regentacr:529
+    restart: always
     ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
-    command: sh -c "/wait && npm run start"
+      - 8080:8080
     environment:
       - DB_HOST=mysql
-      - DB_USER=$MYSQLDB_USER
-      - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - DB_NAME=$MYSQLDB_DATABASE
-      - DB_PORT=$MYSQLDB_DOCKER_PORT
-      - APP_PORT=$NODE_LOCAL_PORT
-      - WAIT_HOSTS=mysql:$MYSQLDB_DOCKER_PORT
-    stdin_open: true
-    tty: true
-volumes: 
+      - DB_USER=root
+      - DB_PASSWORD=12345678
+      - DB_NAME=consultantsdb
+      - DB_PORT=3306
+      - APP_PORT=8080
+      - WAIT_HOSTS=mysql:3306
+volumes:
   db:
