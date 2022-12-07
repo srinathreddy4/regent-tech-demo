@@ -68,7 +68,7 @@ stages:
       displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)'
-        Contents: 'docker-compose.yml'
+        Contents: 'docker-compose.appservice.yml'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
         CleanTargetFolder: true
 
