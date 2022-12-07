@@ -48,13 +48,14 @@ stages:
 
     - task: replacetokens@5
       displayName: Replace Tokens
+      enabled: false
       inputs:
         rootDirectory: '$(Build.SourcesDirectory)'
         targetFiles: '**/docker-compose.appservice.yml'
         encoding: 'auto'
         tokenPattern: 'custom'
-        tokenPrefix: '${'
-        tokenSuffix: '}'
+        tokenPrefix: '#{'
+        tokenSuffix: '}#'
         writeBOM: true
         actionOnMissing: 'warn'
         keepToken: false
