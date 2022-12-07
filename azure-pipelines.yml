@@ -46,7 +46,24 @@ stages:
         repository: 'regentacr'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-
+        tags: '$(Build.BuildId)'
+    - task: replacetokens@5
+      displayName: Replace Tokens
+      inputs:
+        rootDirectory: '$(Build.SourcesDirectory)'
+        targetFiles: '**/docker-compose.appservice.yml'
+        encoding: 'auto'
+        tokenPattern: 'custom'
+        tokenPrefix: '${'
+        tokenSuffix: '}'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        actionOnNoFiles: 'continue'
+        enableTransforms: false
+        enableRecursion: false
+        useLegacyPattern: false
+        enableTelemetry: true
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
       inputs:
