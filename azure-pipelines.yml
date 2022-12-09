@@ -31,9 +31,9 @@ stages:
       enabled: false
       inputs:
         containerRegistry: 'ACR Service connection'
-        repository: 'regenttechdemo'
+        repository: '$(DOCKER_IMAGE_NAME)'
         command: 'run'
-        arguments: '$(containerRegistry)/regenttechdemo_app:$(latestTag) npm install-test'
+        arguments: '$(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) npm install-test'
         addPipelineData: false
         addBaseImageData: false
 
@@ -46,24 +46,6 @@ stages:
         Dockerfile: '**/Dockerfile'
         tags: '$(DOCKER_IMAGE_TAG)'
 
-    - task: replacetokens@5
-      displayName: Replace Tokens
-      enabled: false
-      inputs:
-        rootDirectory: '$(Build.SourcesDirectory)'
-        targetFiles: '**/docker-compose.appservice.yml'
-        encoding: 'auto'
-        tokenPattern: 'custom'
-        tokenPrefix: '#{'
-        tokenSuffix: '}#'
-        writeBOM: true
-        actionOnMissing: 'warn'
-        keepToken: false
-        actionOnNoFiles: 'continue'
-        enableTransforms: false
-        enableRecursion: false
-        useLegacyPattern: false
-        enableTelemetry: true
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
       inputs:
