@@ -9,10 +9,9 @@ resources:
 - repo: self
 
 variables:
+  # Enter the variable group name to link to this pipeline
   - group: regent-tech-demo
-  # Container registry service connection established during pipeline creation
-  - name: dockerRegistryServiceConnection
-    value: '4073c00b-6623-4041-b73e-66989a883a73'
+
   # Agent VM image name
   - name: vmImageName
     value: 'ubuntu-latest'
@@ -26,16 +25,6 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: Docker@2
-      displayName: 'Run tests inside container'
-      enabled: false
-      inputs:
-        containerRegistry: 'ACR Service connection'
-        repository: '$(DOCKER_IMAGE_NAME)'
-        command: 'run'
-        arguments: '$(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) npm install-test'
-        addPipelineData: false
-        addBaseImageData: false
 
     - task: Docker@2
       displayName: Build and Push image to ACR
@@ -45,6 +34,17 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: '$(DOCKER_IMAGE_TAG)'
+
+    - task: Docker@2
+      displayName: 'Run tests inside container'
+      enabled: false
+      inputs:
+        containerRegistry: 'ACR Service connection'
+        repository: '$(DOCKER_IMAGE_NAME)'
+        command: 'run'
+        arguments: '$(DOCKER_REGISTRY_SERVER)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) npm run test'
+        addPipelineData: false
+        addBaseImageData: false
 
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
