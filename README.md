@@ -8,11 +8,11 @@ This lab outlines the process to build custom Docker image of a [**Node.js**](ht
 
 The Web App for Containers allows the creation of custom [Docker](https://www.docker.com/what-docker) container images, easily deploy and then run them on Azure. Combination of Azure DevOps and Azure integration with Docker will enable the following:
 
-1. Build custom Docker images using [Azure DevOps Hosted Linux agent](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=vsts)
+1. Build a custom Docker image.
 
-1. Push and store the Docker images in a private repository
+1. Push and store the Docker images in a private repository.
 
-1. Deploy and run the images on Azure App Services
+1. Deploy and run the images on Azure App Services.
 
 
 ## Setting up the Environment
@@ -25,72 +25,73 @@ The Web App for Containers allows the creation of custom [Docker](https://www.do
 
 2. **Create Azure Container Registry:**
     
-    1. Create a Resource Group. Replace `<region>` with the region of your choosing, for example eastus.
+    1. Select **+Create a resource** in the Azure Portal and search for Container Registry. Select Subscription, Resource Group, Location, SKU. Replace `<Registry name>` with the name of your choosing. Select **Review + create**.
         
        ![ACR](Screenshots/017-CreateContainerRegistry.png)
+
+   > **Note:-**
+   > Enter a unique ACR name. ACR name may contain alpha numeric characters only and must be between 5 and 50 characters.
         
-    2. Create ACR( Azure Container Registry).
+    2. Click **Create**.
 
        ![ACR](Screenshots/018-ClickCreate.png)
 
-    3. djwdkdokodo.
+    3. Navigate back to the resource group. Click on the container registry and enable the Admin user for the registry. This is to allow Azure DevOps to push and read images from ACR. Make a note of the **Registry name**, **Login server**, **username**, **password**. These details will be required in the Exercise 1 and Exercise 2.
 
        ![ACR](Screenshots/019-EnableAdminUser.png)
 
-    {% include important.html content= "Enter a unique ACR name. ACR name may contain alpha numeric characters only and must be between 5 and 50 characters" %}
 
 3. **Create Azure Web App for Containers**:
    
-   1. Create a Linux App Service Plan:
+   1. Select **+Create a resource** in the Azure Portal and search for Web App for Containers. Select Subscription, Resource Group, Name, Operating System, Region, Pricing Plan. Replace `<Name>` with the name of your choosing. Click **Next**.
       
       ![ACR](Screenshots/020-CreateAppServices..png)
 
-   2. Create a custom Docker container Web App: To create a web app and configuring it to run a custom Docker container, run the following command:
+   > **Note:-**
+   > Enter a unique Azure Web App Name.
+
+   2. Select Docker Compose (Preview) Option, Image Source, Registry and click **Review+create**.
 
       ![ACR](Screenshots/021-SelectDockerCompose.png)
 
-   3. click create
+   3. Click **Create**.
 
       ![ACR](Screenshots/022-ClickCreate.png)
 
 
-5. Navigate back to the resource group. Click on the container registry and make a note of the server details under the header **Login server**. These details will be required in the Exercise 2.
-
-   ![ACR](images/getacrserver.png)
-
 ## Exercise 1: Configure Continuous Integration (CI)
 
-Now that the required resources are provisioned, the **Build** and the **Release** definition need to be manually configured with the new information.
+Now that the required resources are provisioned, the **Build** and the **Release** Pipelines needs to created.
 
-1. Navigate to the [Azure DevOps](https://dev.azure.com/RegentQuality/) and select the Competence evenings project.
+1. Navigate to the [Azure DevOps](https://dev.azure.com/RegentQuality/) and select the **Competence evenings** project.
 
    ![SelectProject](Screenshots/001-SelectProject.png)
    
-1. Select Repos and click import a repository.
+1. Select **Repos** and click **import** to import a new repository.
 
    ![Tasks](Screenshots/002-SelectRepos.png)
 
-1. Enter clone URL and click Import
+1. Select Repository type as **Git** and enter the Clone URL as `https://github.com/srinathreddy4/regent-tech-demo`. Select Import.
 
    ![Tasks](Screenshots/003-EnterCloneURL.png)
 
-1. Select Pipelines and Library.
+1. Select **Library** under the Pipelines.
 
    ![Tasks](Screenshots/004-SelectPipelinesLibrary.png)
 
-1. Select new variable group.
+1. Select **+variable group** to create a new variable group.
 
    ![Tasks](Screenshots/005-SelectVariableGroup.png)
 
-1. Click on the Variables section, update the ACR details and the SQLserver details with the details noted earlier while the configuration of the environment and click on the Save button.
+1. Enter the variable group name and below variables. Click on the **Save** button.
 
    ![Tasks](Screenshots/006-EnterVariableGroupNames.png)
 
-1. Select project Settings.
+1. Select **Project settings** at the bottom left.
 
    ![Tasks](Screenshots/007-SelectProjectSettings.png)
 
-1. Select Service Connections.
+1. Select Service Connections and select **New service connection**.
 
    ![Tasks](Screenshots/008-SelectServiceConnections.png)
 
@@ -98,37 +99,37 @@ Now that the required resources are provisioned, the **Build** and the **Release
 
    ![Tasks](Screenshots/009-SelectDockerRegistry.png)
 
-1. Enter details and click save.
+1. Enter the details which you noted down earlier and click **save**.
 
    ![Tasks](Screenshots/010-EnterDetailsAndClickSave.png)
 
-1. select pipeline and new pipeline.
+1. select pipelines and click **New pipeline** to create a Build pipeline.
 
    ![Tasks](Screenshots/011-SelectPipelineAndNewPipeline.png)
 
-1. select Azure repos
+1. select **Azure repos Git**.
 
    ![Tasks](Screenshots/012-SelectAzureReposGit.png)
 
-1. select regent-tech-demo repo.
+1. select **regent-tech-demo** repo.
 
    ![Tasks](Screenshots/013-SelectRegenttechdemoRepo.png)
 
-1. select existing azure pipelines yaml file.
+1. select **Existing Azure Pipelines YAML file**.
 
    ![Tasks](Screenshots/014-SelectAzurePipelineYamlFile.png)
 
-1. select branch path and continue.
+1. select master branch and yaml file path. Click **Continue**.
 
    ![Tasks](Screenshots/015-SelectBranchPathContinue.png)
 
-1. Click Run.
+1. Click **Run** to run the Build Pipeline.
 
    ![Tasks](Screenshots/016-ClickRun.png)
 
 1. The Build will generate and push the docker image of the web application to the Azure Container Registry. Once the build is completed, the build summary will be displayed.
 
-   ![Tasks](Screenshots/pushbuild5.png)
+   ![Tasks](Screenshots/023-BuildPipelineSuccess.png)
 
 
 ## Exercise 2: Configure Continuous Delivery (CD)
@@ -142,10 +143,38 @@ Now that the required resources are provisioned, the **Build** and the **Release
 
    ![Tasks](Screenshots/pushbuild5.png)
 
-![012-ClickRun.png](/.attachments/012-ClickRun-d0c8ea20-5174-4db5-9f0e-1de40e0fb540.png)
+1. Select **Library** under the Pipelines.
 
-1. Use the credentials **Username**: `user` and **Password**: `P2ssw0rd@1` to login to the **HealthClinic** web application.
+   ![Tasks](Screenshots/024-SelectReleasesNewPipeline.png)
+
+1. Select **Library** under the Pipelines.
+
+   ![Tasks](Screenshots/025-SelectArtificatFromBuild.png)
+
+1. Select **Library** under the Pipelines.
+
+   ![Tasks](Screenshots/026-LinkVariableGroup.png)
+
+1. Select **Library** under the Pipelines.
+
+   ![Tasks](Screenshots/027-SelectAgentPool.png)
+
+1. Select **Library** under the Pipelines.
+
+   ![Tasks](Screenshots/028-AddReplaceTokens.png)
+
+1. Select **Library** under the Pipelines.
+
+   ![Tasks](Screenshots/029-SelectSubscriptionSave.png)
+
+1. Select **Library** under the Pipelines.
+
+   ![Tasks](Screenshots/030-CreateRelease.png)
+
+1. Select **Library** under the Pipelines.
+
+   ![Tasks](Screenshots/031-ReleaseSuccess.png)
 
 ## Summary
 
-With **Azure DevOps** and **Azure**, we have configured a dockerized application by leveraging docker capabilities enabled on Azure DevOps Ubuntu Hosted Agent.
+With **Azure DevOps** and **Azure**, we have configured a Build and Release pipeline to deploy a Node.js API and Mysql database on Azure App Services.
