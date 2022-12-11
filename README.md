@@ -143,38 +143,38 @@ Now that the required resources are provisioned, the **Build** and the **Release
 
    ![Tasks](Screenshots/pushbuild5.png)
 
-1. Select **Library** under the Pipelines.
+1. Select Releases under the Pipelines and click **New pipeline** to create a Release Pipeline.
 
    ![Tasks](Screenshots/024-SelectReleasesNewPipeline.png)
 
-1. Select **Library** under the Pipelines.
+1. Click **+ Add** to add the artifacts from the build pipeline. Select the Project and Source.
 
    ![Tasks](Screenshots/025-SelectArtificatFromBuild.png)
 
-1. Select **Library** under the Pipelines.
+1. Select Variables and Variable groups to link the variable group created in the previous Exercise 1.
 
    ![Tasks](Screenshots/026-LinkVariableGroup.png)
 
-1. Select **Library** under the Pipelines.
+1. Select Tasks and click Run on Agent to configure the Job by slecting Agent Pool and Agent Specification. 
 
    ![Tasks](Screenshots/027-SelectAgentPool.png)
 
-1. Select **Library** under the Pipelines.
+1. Click **+** and select **Replace Tokens** task. Configure the task as shown in the below image.
 
    ![Tasks](Screenshots/028-AddReplaceTokens.png)
 
-1. Select **Library** under the Pipelines.
+1. Click **+** and select  **Azure Web App for Containers** task. Configure the task as shown in the below image. Click **Save** to save the configured pipeline.
 
    ![Tasks](Screenshots/029-SelectSubscriptionSave.png)
 
-1. Select **Library** under the Pipelines.
+1. Select Create release and click **Create** to run the pipeline.
 
    ![Tasks](Screenshots/030-CreateRelease.png)
 
-1. Select **Library** under the Pipelines.
+1. The Release will deploy the application on Azure web App for Containers. Once the build is completed, the build summary will be displayed.
 
    ![Tasks](Screenshots/031-ReleaseSuccess.png)
 
 ## Summary
 
-With **Azure DevOps** and **Azure**, we have configured a Build and Release pipeline to deploy a Node.js API and Mysql database on Azure App Services.
+With **Azure DevOps** and **Azure**, we have configured a Build and Release pipeline to deploy a Node.js API and Mysql database images on Azure App Services.
