@@ -169,6 +169,10 @@ Now that the required resources are provisioned, the **Build** and the **Release
 1. Navigate back to the Azure Portal and click on the Overview section of the App Service. Click on the link displayed under the URL field to browse the application and view the changes.
 
    ![Tasks](Screenshots/032-AppWebsite.png)
+   
+## Testing the API
+
+Here are some Postman examples of how to verify our application is working according to specifications. I've compiled a collection for the sake of simplicity: [**Postman API testing collection**](https://github.com/srinathreddy4/regent-tech-demo/blob/master/screenshots/regent-tech-demo.postman_collection.json)
 
 ## Summary
 
