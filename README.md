@@ -172,7 +172,7 @@ Now that the required resources are provisioned, the **Build** and the **Release
    
 ## Testing the API
 
-Here are some Postman examples of how to verify our application is working according to specifications. I've compiled a collection for the sake of simplicity: [**Postman API testing collection**](https://github.com/srinathreddy4/regent-tech-demo/blob/master/screenshots/regent-tech-demo.postman_collection.json)
+Here are some Postman examples of how to verify our application is working according to specifications. I've compiled a collection for the sake of simplicity: [**Postman API testing collection**](https://github.com/srinathreddy4/regent-tech-demo/blob/master/Screenshots/regent-tech-demo.postman_collection.json)
 
 ## Summary
 
