@@ -134,15 +134,6 @@ Now that the required resources are provisioned, the **Build** and the **Release
 
 ## Exercise 2: Configure Continuous Delivery (CD)
 
-
-1. Navigate to the Azure Portal and click on the App Service that was created at the beginning of this lab. Select the Container Settings option and provide the information as suggested and then click the Save button.
-
-   ![Tasks](Screenshots/pushbuild5.png)
-
-1. Navigate back to the Azure Portal and click on the Overview section of the App Service. Click on the link displayed under the URL field to browse the application and view the changes.
-
-   ![Tasks](Screenshots/pushbuild5.png)
-
 1. Select Releases under the Pipelines and click **New pipeline** to create a Release Pipeline.
 
    ![Tasks](Screenshots/024-SelectReleasesNewPipeline.png)
@@ -174,6 +165,10 @@ Now that the required resources are provisioned, the **Build** and the **Release
 1. The Release will deploy the application on Azure web App for Containers. Once the build is completed, the build summary will be displayed.
 
    ![Tasks](Screenshots/031-ReleaseSuccess.png)
+   
+1. Navigate back to the Azure Portal and click on the Overview section of the App Service. Click on the link displayed under the URL field to browse the application and view the changes.
+
+   ![Tasks](Screenshots/032-AppWebsite.png)
 
 ## Summary
 
